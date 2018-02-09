@@ -8,6 +8,8 @@ with requests.session() as s:
 	home = s.get(homepage)
 	bowl = BeautifulSoup(home.content, 'html.parser')
 
+	# get the URLS for each book subpage from the homepage
+
 	book_urls = []
 
 	for books in bowl.find_all('div', {'class': 'bookContainer grow'}):
@@ -18,9 +20,7 @@ with requests.session() as s:
 			book_url = homepage + i['href']
 			book_urls.append(book_url)
 
-			# print(book_url)
-	
-	# print(book_urls)
+	# get book download link from each subpage and download it ;-)
 
 	for book_front in book_urls:
 
@@ -33,8 +33,12 @@ with requests.session() as s:
 			for link in link_elem:
 
 				download_payload = book_front + '/' + link['href']
+
 				if('.pdf' in download_payload):
 					download_link = download_payload
-				#download_link, sep, tail = download_payload.partition('.pdf')
 
 					print(download_link)
+
+					file = s.get(download_link)
+					with open(link['href'], 'wb') as f:
+						f.write(file.content)

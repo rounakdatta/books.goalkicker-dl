@@ -32,6 +32,9 @@ with requests.session() as s:
 
 			for link in link_elem:
 
-				download_link = book_front + '/' + link['href']
+				download_payload = book_front + '/' + link['href']
+				if('.pdf' in download_payload):
+					download_link = download_payload
+				#download_link, sep, tail = download_payload.partition('.pdf')
 
-				print(download_link)
+					print(download_link)

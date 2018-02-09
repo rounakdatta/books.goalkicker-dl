@@ -37,7 +37,7 @@ with requests.session() as s:
 				if('.pdf' in download_payload):
 					download_link = download_payload
 
-					print(download_link)
+					print('Downloading ' + link['href'] + ' ...')
 
 					file = s.get(download_link)
 					with open(link['href'], 'wb') as f:
